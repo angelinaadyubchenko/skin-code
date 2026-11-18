@@ -1,0 +1,20 @@
+<header class="sticky-header">
+  <div class="wrapper">
+    <div class="header-content">
+      <div class="logo">
+        <img src="/images/logo.png" alt="Логотип">
+        <h1>My Skin Code</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/" {{#if isIndex}}class="active"{{/if}}>Главная</a></li>
+          <li><a href="/about" {{#if isAbout}}class="active"{{/if}}>О нас</a></li>
+          <li><a href="/products" {{#if isProducts}}class="active"{{/if}}>Продукты</a></li>
+          <li><a href="/reviews" {{#if isReviews}}class="active"{{/if}}>Отзывы</a></li>
+          <li><a href="/orders" {{#if isOrders}}class="active"{{/if}}>Заказы</a></li>
+        </ul>
+      </nav>
+      {{> session}}
+    </div>
+  </div>
+</header>

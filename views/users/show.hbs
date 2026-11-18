@@ -1,0 +1,8 @@
+<div class="wrapper">
+  <h2>{{userItem.name}}</h2>
+  <p>Email: {{userItem.email}}</p>
+  <a href="/users/{{userItem.id}}/edit">Редактировать</a>
+  <form action="/users/{{userItem.id}}/delete" method="POST">
+    <button type="submit">Удалить</button>
+  </form>
+</div>

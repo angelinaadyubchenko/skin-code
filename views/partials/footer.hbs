@@ -1,0 +1,30 @@
+<footer>
+  <div class="wrapper">
+    <div class="footer-content">
+      <div>
+        <h3>My Skin Code</h3>
+        <p>Индивидуальный подбор косметики</p>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <p><i class="fas fa-envelope"></i> info@myskincode.ru</p>
+        <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+        <p><i class="fas fa-map-marker-alt"></i> Санкт-Петербург, ул. Домашняя, 6</p>
+      </div>
+      <div>
+        <h4>Мы в соцсетях</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-vk"></i></a>
+          <a href="#"><i class="fab fa-telegram"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 My Skin Code</p>
+      {{#if serverTime}}
+      <p class="perf-info">Сервер: {{serverTime}}мс &nbsp;|&nbsp; Клиент: <span id="clientTime">…</span>мс</p>
+      {{/if}}
+    </div>
+  </div>
+</footer>

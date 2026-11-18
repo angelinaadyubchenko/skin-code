@@ -1,0 +1,212 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CategoryType {
+  id: String!
+  name: String!
+  products: [ProductType!]!
+}
+
+input CreateCategoryInput {
+  name: String!
+}
+
+input CreateOrderInput {
+  productIds: [String!]!
+  quantities: [Int!]!
+  userId: String!
+}
+
+input CreateProductInput {
+  categoryId: String!
+  description: String
+  name: String!
+  price: Float!
+  stock: Int!
+}
+
+input CreateReviewInput {
+  comment: String
+  productId: String!
+  rating: Int!
+  userId: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  cancelOrder(id: ID!): OrderType!
+  confirmOrder(id: ID!): OrderType!
+  createCategory(input: CreateCategoryInput!): CategoryType!
+  createOrder(input: CreateOrderInput!): OrderType!
+  createProduct(input: CreateProductInput!): ProductType!
+  createReview(input: CreateReviewInput!): ReviewType!
+  createUser(input: CreateUserInput!): UserType!
+  deleteCategory(id: ID!): CategoryType!
+  deleteOrder(id: ID!): OrderType!
+  deleteProduct(id: ID!): ProductType!
+  deleteReview(id: ID!): ReviewType!
+  deleteUser(id: ID!): UserType!
+  deliverOrder(id: ID!): OrderType!
+  hideProduct(id: ID!): ProductType!
+  publishProduct(id: ID!): ProductType!
+  shipOrder(id: ID!): OrderType!
+  updateCategory(id: ID!, input: UpdateCategoryInput!): CategoryType!
+  updateOrder(id: ID!, input: UpdateOrderInput!): OrderType!
+  updateProduct(id: ID!, input: UpdateProductInput!): ProductType!
+  updateReview(id: ID!, input: UpdateReviewInput!): ReviewType!
+  updateUser(id: ID!, input: UpdateUserInput!): UserType!
+}
+
+type OrderItemType {
+  id: String!
+  orderId: String!
+  price: Float!
+  product: ProductType
+  productId: String!
+  quantity: Int!
+}
+
+enum OrderStatus {
+  CANCELLED
+  CONFIRMED
+  DELIVERED
+  PENDING
+  SHIPPED
+}
+
+type OrderType {
+  createdAt: DateTime!
+  id: String!
+  items: [OrderItemType!]
+  status: OrderStatus!
+  totalPrice: Float!
+  user: UserType
+  userId: String!
+}
+
+type PaginatedCategories {
+  data: [CategoryType!]!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedOrders {
+  data: [OrderType!]!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedProducts {
+  data: [ProductType!]!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedReviews {
+  data: [ReviewType!]!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type PaginatedUsers {
+  data: [UserType!]!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type ProductType {
+  category: CategoryType
+  categoryId: String!
+  description: String
+  id: String!
+  imageUrl: String
+  name: String!
+  price: Float!
+  published: Boolean!
+  reviews: [ReviewType!]!
+  stock: Int!
+}
+
+type Query {
+  categories(limit: Int! = 10, page: Int! = 1): PaginatedCategories!
+  category(id: ID!): CategoryType!
+  order(id: ID!): OrderType!
+  orders(limit: Int! = 10, page: Int! = 1): PaginatedOrders!
+  product(id: ID!): ProductType!
+  products(limit: Int! = 10, page: Int! = 1): PaginatedProducts!
+  review(id: ID!): ReviewType!
+  reviews(limit: Int! = 10, page: Int! = 1): PaginatedReviews!
+  user(id: ID!): UserType!
+  users(limit: Int! = 10, page: Int! = 1): PaginatedUsers!
+}
+
+type ReviewType {
+  comment: String
+  createdAt: DateTime!
+  id: String!
+
+  """URL фото в Яндекс.Облаке"""
+  photoUrl: String
+  product: ProductType
+  productId: String!
+  rating: Int!
+  user: UserType
+  userId: String!
+}
+
+input UpdateCategoryInput {
+  name: String
+}
+
+input UpdateOrderInput {
+  status: OrderStatus
+}
+
+input UpdateProductInput {
+  categoryId: String
+  description: String
+  name: String
+  price: Float
+  stock: Int
+}
+
+input UpdateReviewInput {
+  comment: String
+  rating: Int
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+type UserType {
+  createdAt: DateTime
+  email: String!
+  id: String!
+  name: String!
+  orders: [OrderType!]!
+  reviews: [ReviewType!]!
+  role: UserRole!
+}

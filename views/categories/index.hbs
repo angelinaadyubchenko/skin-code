@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <h2>Категории</h2>
+  <a href="/categories/add">+ Добавить категорию</a>
+  <ul>
+    {{#each categories}}
+    <li>
+      <a href="/categories/{{this.id}}">{{this.name}}</a>
+      <form action="/categories/{{this.id}}/delete" method="POST" style="display:inline">
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+    {{/each}}
+  </ul>
+</div>

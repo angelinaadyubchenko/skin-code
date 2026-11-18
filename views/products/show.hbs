@@ -1,0 +1,23 @@
+<section class="page-section">
+  <div class="wrapper">
+    <a href="/products" class="form-back">← Назад к товарам</a>
+    <div class="product-detail">
+      <span class="product-category">{{product.category.name}}</span>
+      <h2>{{product.name}}</h2>
+      <p class="product-card-desc">{{product.description}}</p>
+      <div class="product-detail-price">{{product.price}} ₽</div>
+      <div class="product-detail-meta">
+        <span>В наличии: <strong>{{product.stock}} шт.</strong></span>
+        <span>Категория: <strong>{{product.category.name}}</strong></span>
+      </div>
+      {{#if (eq user.role "ADMIN")}}
+      <div class="product-detail-actions">
+        <a href="/products/{{product.id}}/edit" class="btn">Редактировать</a>
+        <form action="/products/{{product.id}}/delete" method="POST">
+          <button type="submit" class="btn btn-secondary">Удалить</button>
+        </form>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</section>

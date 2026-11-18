@@ -1,0 +1,22 @@
+<section class="form-page">
+  <div class="wrapper">
+    <a href="/orders/{{order.id}}" class="form-back">← Назад к заказу</a>
+    <div class="styled-form">
+      <h2>Изменить статус заказа</h2>
+      <p style="color: var(--text-mid); margin-bottom: 20px;">Заказ от {{order.user.name}} на сумму {{order.totalPrice}} ₽</p>
+      <form action="/orders/{{order.id}}/edit" method="POST">
+        <div class="form-group">
+          <label>Статус</label>
+          <select name="status" required>
+            <option value="PENDING" {{#if (eq order.status "PENDING")}}selected{{/if}}>Ожидает обработки</option>
+            <option value="CONFIRMED" {{#if (eq order.status "CONFIRMED")}}selected{{/if}}>Подтверждён</option>
+            <option value="SHIPPED" {{#if (eq order.status "SHIPPED")}}selected{{/if}}>Отправлен</option>
+            <option value="DELIVERED" {{#if (eq order.status "DELIVERED")}}selected{{/if}}>Доставлен</option>
+            <option value="CANCELLED" {{#if (eq order.status "CANCELLED")}}selected{{/if}}>Отменён</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Сохранить</button>
+      </form>
+    </div>
+  </div>
+</section>

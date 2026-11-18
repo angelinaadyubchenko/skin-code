@@ -1,0 +1,28 @@
+<section class="hero">
+  <div class="wrapper">
+    <h2>Популярные продукты</h2>
+    <p>Лучшие средства для ухода за кожей</p>
+  </div>
+</section>
+
+<section class="top-products">
+  <div class="wrapper">
+    <h2 class="section-title">Топ-4 любимых средства</h2>
+    <div class="products-list">
+      <ol>
+        {{#each products}}
+        <li class="product-item">
+          <a href="/product/{{this.id}}">
+            <span class="number">{{this.rank}}</span>
+            <div class="product-info">
+              <h3>{{this.name}}</h3>
+              <p>{{this.description}}</p>
+              <span class="price">{{this.price}} ₽</span>
+            </div>
+          </a>
+        </li>
+        {{/each}}
+      </ol>
+    </div>
+  </div>
+</section>

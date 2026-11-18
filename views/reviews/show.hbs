@@ -1,0 +1,57 @@
+<section class="page-section">
+  <div class="wrapper">
+    <a href="/reviews" class="form-back">← Назад к отзывам</a>
+    <div class="review-detail">
+      <span class="review-author">{{review.user.name}}</span>
+      <span class="review-product">о товаре «{{review.product.name}}»</span>
+      <div class="review-stars">
+        {{review.rating}} / 5
+      </div>
+      {{#if review.comment}}
+      <p class="review-comment" style="font-size: 1.1rem; margin: 20px 0;">{{review.comment}}</p>
+      {{/if}}
+
+      {{#if review.photoUrl}}
+      <div style="margin: 20px 0;">
+        <img src="{{review.photoUrl}}" alt="Фото к отзыву" style="max-width: 100%; max-height: 400px; border-radius: 8px; object-fit: cover;">
+      </div>
+      {{/if}}
+
+      <div style="margin: 20px 0;">
+        <p style="font-weight: 600; margin-bottom: 8px;">{{#if review.photoUrl}}Заменить фото{{else}}Добавить фото{{/if}}</p>
+        <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" style="margin-bottom: 8px; display: block;">
+        <button onclick="uploadPhoto()" class="btn btn-secondary">Загрузить</button>
+        <span id="uploadStatus" style="margin-left: 12px; color: var(--text-mid);"></span>
+      </div>
+
+      <div class="product-detail-actions">
+        <a href="/reviews/{{review.id}}/edit" class="btn">Редактировать</a>
+        <form action="/reviews/{{review.id}}/delete" method="POST">
+          <button type="submit" class="btn btn-secondary">Удалить</button>
+        </form>
+      </div>
+
+      <script>
+        async function uploadPhoto() {
+          const input = document.getElementById('photoInput');
+          const status = document.getElementById('uploadStatus');
+          if (!input.files.length) {
+            status.textContent = 'Выберите файл';
+            return;
+          }
+          const formData = new FormData();
+          formData.append('photo', input.files[0]);
+          status.textContent = 'Загрузка...';
+          try {
+            const res = await fetch('/api/reviews/{{review.id}}/photo', { method: 'POST', body: formData });
+            if (!res.ok) throw new Error();
+            status.textContent = 'Загружено!';
+            setTimeout(() => location.reload(), 800);
+          } catch {
+            status.textContent = 'Ошибка загрузки';
+          }
+        }
+      </script>
+    </div>
+  </div>
+</section>

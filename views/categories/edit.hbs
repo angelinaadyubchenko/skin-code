@@ -1,0 +1,7 @@
+<div class="wrapper">
+  <h2>Редактировать категорию</h2>
+  <form action="/categories/{{category.id}}/edit" method="POST">
+    <input type="text" name="name" value="{{category.name}}" required>
+    <button type="submit">Сохранить</button>
+  </form>
+</div>

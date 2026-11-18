@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <h2>{{category.name}}</h2>
+  <h3>Товары в категории:</h3>
+  <ul>
+    {{#each category.products}}
+    <li><a href="/products/{{this.id}}">{{this.name}}</a></li>
+    {{/each}}
+  </ul>
+  <a href="/categories/{{category.id}}/edit">Редактировать</a>
+  <form action="/categories/{{category.id}}/delete" method="POST">
+    <button type="submit">Удалить</button>
+  </form>
+</div>

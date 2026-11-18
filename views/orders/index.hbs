@@ -1,0 +1,48 @@
+<section class="hero">
+  <div class="wrapper">
+    <h2>Заказы</h2>
+    <p>Управление заказами клиентов</p>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="wrapper">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <h2 class="section-title">Все заказы</h2>
+      {{#if user}}
+      <a href="/orders/add" class="btn">Сделать заказ</a>
+      {{/if}}
+    </div>
+
+    {{#if orders.length}}
+    <div class="orders-list">
+      {{#each orders}}
+      <div class="order-card">
+        <div class="order-header">
+          <span class="order-id">Заказ #{{this.id}}</span>
+          <span class="order-status {{lowercase this.status}}">{{this.status}}</span>
+        </div>
+        <div class="order-info">
+          <span>Покупатель: <strong>{{this.user.name}}</strong></span>
+          <span>Товаров: <strong>{{this.items.length}}</strong></span>
+        </div>
+        <div class="order-total">{{this.totalPrice}} ₽</div>
+        <div class="order-actions">
+          <a href="/orders/{{this.id}}" class="btn-edit">Подробнее</a>
+          <a href="/orders/{{this.id}}/edit" class="btn-edit">Изменить статус</a>
+          <form action="/orders/{{this.id}}/delete" method="POST" style="display:inline">
+            <button type="submit" class="btn-delete">Удалить</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="empty-state">
+      <h3>У вас нет актуальных заказов</h3>
+      <p>Оформите первый заказ в нашем магазине</p>
+      {{#unless user}}<a href="/login" class="btn">Войдите, чтобы сделать заказ</a>{{/unless}}
+    </div>
+    {{/if}}
+  </div>
+</section>

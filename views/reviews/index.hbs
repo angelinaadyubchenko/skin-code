@@ -1,0 +1,58 @@
+<section class="hero">
+  <div class="wrapper">
+    <h2>Отзывы покупателей</h2>
+    <p>Мнения наших клиентов о продукции</p>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="wrapper">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <h2 class="section-title">Все отзывы</h2>
+      {{#if user}}
+        {{#if (eq user.role "ADMIN")}}
+        <a href="/reviews/add" class="btn btn-green">Написать отзыв</a>
+        {{else if hasReview}}
+        <span class="btn btn-secondary" style="cursor:default;">Вы уже оставили отзыв</span>
+        {{else}}
+        <a href="/reviews/add" class="btn">Написать отзыв</a>
+        {{/if}}
+      {{else}}
+      <a href="/login" class="btn">Войдите, чтобы написать отзыв</a>
+      {{/if}}
+    </div>
+
+    {{#if reviews.length}}
+    <div class="reviews-list">
+      {{#each reviews}}
+      <div class="review-card">
+        <div class="review-header">
+          <div>
+            <span class="review-author">{{this.user.name}}</span>
+            <span class="review-product">о товаре «{{this.product.name}}»</span>
+          </div>
+          <div class="review-stars">
+            {{#times this.rating}}★{{/times}}{{#times (subtract 5 this.rating)}}☆{{/times}}
+          </div>
+        </div>
+        {{#if this.comment}}
+        <p class="review-comment">{{this.comment}}</p>
+        {{/if}}
+        <div class="review-actions">
+          <a href="/reviews/{{this.id}}" class="btn-edit">Подробнее</a>
+          <a href="/reviews/{{this.id}}/edit" class="btn-edit">Редактировать</a>
+          <form action="/reviews/{{this.id}}/delete" method="POST" style="display:inline">
+            <button type="submit" class="btn-delete">Удалить</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="empty-state">
+      <h3>Отзывов пока нет</h3>
+      <p>Станьте первым, кто оставит отзыв</p>
+    </div>
+    {{/if}}
+  </div>
+</section>

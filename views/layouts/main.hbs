@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>My Skin Code</title>
+  {{> head}}
+</head>
+<body>
+  {{> header}}
+
+  <main>
+    {{{body}}}
+  </main>
+
+  {{> footer}}
+<script>
+  const _navStart = performance.timing.navigationStart;
+  const _domReady = performance.timing.domContentLoadedEventEnd;
+  const el = document.getElementById('clientTime');
+  if (el) el.textContent = (_domReady - _navStart) || (Date.now() - _navStart);
+</script>
+</body>
+</html>

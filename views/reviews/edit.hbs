@@ -1,0 +1,25 @@
+<section class="form-page">
+  <div class="wrapper">
+    <a href="/reviews/{{review.id}}" class="form-back">← Назад к отзыву</a>
+    <div class="styled-form">
+      <h2>Редактировать отзыв</h2>
+      <form action="/reviews/{{review.id}}/edit" method="POST">
+        <div class="form-group">
+          <label>Оценка</label>
+          <select name="rating" required>
+            <option value="5" {{#if (eq review.rating 5)}}selected{{/if}}>★★★★★ Отлично</option>
+            <option value="4" {{#if (eq review.rating 4)}}selected{{/if}}>★★★★☆ Хорошо</option>
+            <option value="3" {{#if (eq review.rating 3)}}selected{{/if}}>★★★☆☆ Нормально</option>
+            <option value="2" {{#if (eq review.rating 2)}}selected{{/if}}>★★☆☆☆ Плохо</option>
+            <option value="1" {{#if (eq review.rating 1)}}selected{{/if}}>★☆☆☆☆ Ужасно</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Комментарий</label>
+          <textarea name="comment">{{review.comment}}</textarea>
+        </div>
+        <button type="submit" class="btn">Сохранить</button>
+      </form>
+    </div>
+  </div>
+</section>

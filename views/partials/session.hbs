@@ -1,0 +1,12 @@
+<div class="session-info">
+  {{#if user}}
+    <span class="user-badge">
+      {{user.name}}{{#if (eq user.role "ADMIN")}} · Admin{{/if}}
+    </span>
+    <a href="/change-password" class="btn btn-sm">Сменить пароль</a>
+    <a href="/logout" class="btn btn-secondary btn-sm">Выйти</a>
+  {{else}}
+    <a href="/login" class="btn btn-sm">Войти</a>
+    <a href="/register" class="btn btn-secondary btn-sm">Регистрация</a>
+  {{/if}}
+</div>

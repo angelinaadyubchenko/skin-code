@@ -1,0 +1,34 @@
+<section class="hero">
+  <div class="wrapper">
+    <h2>Отзывы клиентов</h2>
+    <p>Поделитесь своим мнением о наших продуктах</p>
+  </div>
+</section>
+
+<section class="feedback-section">
+  <div class="wrapper">
+    <h2 class="section-title">Оставьте отзыв</h2>
+    <div class="feedback-container">
+      <div class="feedback-form-wrapper">
+        <form id="feedbackForm" class="contact-form">
+          <div class="form-group">
+            <label for="name">Имя *</label>
+            <input type="text" id="name" name="name" required placeholder="Ваше имя">
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="email@example.com">
+          </div>
+          <div class="form-group">
+            <label for="comment">Отзыв *</label>
+            <textarea id="comment" name="comment" required placeholder="Ваш отзыв..."></textarea>
+          </div>
+          <button type="submit" class="btn">Отправить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/js/feedback.js" defer></script>
+<script src="/js/api.js" defer></script>

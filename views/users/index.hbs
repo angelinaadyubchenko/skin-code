@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <h2>Пользователи</h2>
+  <ul>
+    {{#each users}}
+    <li>
+      <a href="/users/{{this.id}}">{{this.name}} ({{this.email}})</a>
+      <form action="/users/{{this.id}}/delete" method="POST" style="display:inline">
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+    {{/each}}
+  </ul>
+</div>

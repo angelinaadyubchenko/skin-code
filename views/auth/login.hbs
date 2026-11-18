@@ -1,0 +1,27 @@
+<section class="form-page">
+  <div class="wrapper">
+    <div class="styled-form">
+      <h2>Вход</h2>
+      <p style="color: var(--text-mid); margin-bottom: 20px;">Войдите в аккаунт, созданный в базе данных.</p>
+
+      {{#if error}}
+      <p style="color: #b42318; margin-bottom: 20px;">{{error}}</p>
+      {{/if}}
+
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" value="{{form.email}}" placeholder="user@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" name="password" placeholder="Введите пароль" required>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button type="submit" class="btn">Войти</button>
+          <a href="/register" class="btn btn-secondary">Регистрация</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

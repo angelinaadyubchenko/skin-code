@@ -1,0 +1,33 @@
+<section class="hero">
+  <div class="wrapper">
+    <h2>Найдите свой код кожи</h2>
+    <p>Индивидуальный подбор косметики для вашего типа кожи</p>
+    <div style="margin-top: 30px;">
+      <a href="https://t.me/angelinaaa6" target="_blank" class="btn btn-large">Пройти опрос</a>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section">
+  <div class="wrapper">
+    <h2 class="section-title">Популярные продукты</h2>
+    <div class="gallery">
+      {{#each products}}
+      <div class="gallery-item">
+        <img src="/images/{{this.image}}" alt="{{this.name}}">
+        <h3>{{this.name}}</h3>
+        <p>{{this.description}}</p>
+        <a href="/products/{{this.id}}" class="btn">Подробнее</a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<div class="ad-banner">
+  <div class="wrapper">
+    <h3>Скидка 20% на первую покупку!</h3>
+    <p>Используйте промокод: SKINCODE20</p>
+    <button class="btn">Получить скидку</button>
+  </div>
+</div>

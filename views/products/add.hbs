@@ -1,0 +1,36 @@
+<section class="form-page">
+  <div class="wrapper">
+    <a href="/products" class="form-back">← Назад к товарам</a>
+    <div class="styled-form">
+      <h2>Новый товар</h2>
+      <form action="/products" method="POST">
+        <div class="form-group">
+          <label>Название</label>
+          <input type="text" name="name" placeholder="Название товара" required>
+        </div>
+        <div class="form-group">
+          <label>Описание</label>
+          <textarea name="description" placeholder="Описание товара"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Цена (₽)</label>
+          <input type="number" name="price" placeholder="0.00" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Количество на складе</label>
+          <input type="number" name="stock" placeholder="0" required>
+        </div>
+        <div class="form-group">
+          <label>Категория</label>
+          <select name="categoryId" required>
+            <option value="" disabled selected>Выберите категорию</option>
+            {{#each categories}}
+            <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <button type="submit" class="btn">Создать товар</button>
+      </form>
+    </div>
+  </div>
+</section>

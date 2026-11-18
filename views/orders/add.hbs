@@ -1,0 +1,50 @@
+<section class="form-page">
+  <div class="wrapper">
+    <a href="/orders" class="form-back">← Назад к заказам</a>
+    <div class="styled-form">
+      <h2>Новый заказ</h2>
+      <form action="/orders" method="POST">
+        {{#if users}}
+        <div class="form-group">
+          <label>Покупатель</label>
+          <select name="userId" required>
+            <option value="" disabled selected>Выберите покупателя</option>
+            {{#each users}}
+            <option value="{{this.id}}">{{this.name}} ({{this.email}})</option>
+            {{/each}}
+          </select>
+        </div>
+        {{else}}
+        <input type="hidden" name="userId" value="{{user.id}}">
+        {{/if}}
+
+        <h3 style="margin: 20px 0 10px;">Товары</h3>
+        <div id="order-items">
+          <div class="order-item-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <select name="productIds" required style="flex: 2;">
+              <option value="" disabled selected>Выберите товар</option>
+              {{#each products}}
+              <option value="{{this.id}}" data-price="{{this.price}}">{{this.name}} — {{this.price}} ₽</option>
+              {{/each}}
+            </select>
+            <input type="number" name="quantities" placeholder="Кол-во" min="1" value="1" required style="flex: 1;">
+          </div>
+        </div>
+        <a href="#" onclick="addItem(); return false;" style="color: var(--primary); font-weight: 600;">+ Добавить ещё товар</a>
+
+        <button type="submit" class="btn" style="margin-top: 20px;">Создать заказ</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+function addItem() {
+  const container = document.getElementById('order-items');
+  const first = container.querySelector('.order-item-row');
+  const clone = first.cloneNode(true);
+  clone.querySelector('select').selectedIndex = 0;
+  clone.querySelector('input').value = 1;
+  container.appendChild(clone);
+}
+</script>

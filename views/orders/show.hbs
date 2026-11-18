@@ -1,0 +1,51 @@
+<section class="page-section">
+  <div class="wrapper">
+    <a href="/orders" class="form-back">← Назад к заказам</a>
+    <div class="order-detail">
+      <div class="order-header">
+        <h2>Заказ</h2>
+        <span class="order-status {{lowercase order.status}}">{{order.status}}</span>
+      </div>
+
+      <div class="product-detail-meta">
+        <span>Покупатель: <strong>{{order.user.name}}</strong></span>
+        <span>Email: <strong>{{order.user.email}}</strong></span>
+      </div>
+
+      {{#if order.items.length}}
+      <h3 style="margin: 20px 0 10px;">Товары в заказе:</h3>
+      <table class="order-items-table">
+        <thead>
+          <tr>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Цена</th>
+            <th>Сумма</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each order.items}}
+          <tr>
+            <td>{{this.product.name}}</td>
+            <td>{{this.quantity}} шт.</td>
+            <td>{{this.price}} ₽</td>
+            <td><strong>{{multiply this.quantity this.price}} ₽</strong></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+
+      <div class="order-total" style="text-align: right; font-size: 1.5rem; margin: 20px 0;">
+        Итого: {{order.totalPrice}} ₽
+      </div>
+
+      <div class="product-detail-actions">
+        <a href="/orders/{{order.id}}/edit" class="btn">Изменить статус</a>
+        <form action="/orders/{{order.id}}/delete" method="POST">
+          <button type="submit" class="btn btn-secondary">Удалить заказ</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

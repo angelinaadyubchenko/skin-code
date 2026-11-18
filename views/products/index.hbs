@@ -1,0 +1,162 @@
+<section class="hero">
+  <div class="wrapper">
+    <h2>Популярные продукты</h2>
+    <p>Лучшие средства для ухода за кожей</p>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="wrapper">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <h2 class="section-title">Все товары</h2>
+      {{#if (eq user.role "ADMIN")}}
+      <a href="/products/add" class="btn">Добавить товар</a>
+      {{/if}}
+    </div>
+
+    {{#if products.length}}
+    <div class="products-grid" id="products-grid">
+      {{#each products}}
+      <div class="product-card" data-product-id="{{this.id}}">
+        <div class="product-card-body">
+          <span class="product-category">{{this.category.name}}</span>
+          <h3><a href="/products/{{this.id}}">{{this.name}}</a></h3>
+          <p class="product-card-desc">{{this.description}}</p>
+          <div class="product-card-footer">
+            <span class="product-price">{{this.price}} ₽</span>
+            <span class="product-stock">В наличии: {{this.stock}} шт.</span>
+          </div>
+          {{#if (eq ../user.role "ADMIN")}}
+          <div class="review-actions" style="margin-top: 15px;">
+            <a href="/products/{{this.id}}/edit" class="btn-edit">Редактировать</a>
+            <form action="/products/{{this.id}}/delete" method="POST" style="display:inline">
+              <button type="submit" class="btn-delete">Удалить</button>
+            </form>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="empty-state" id="products-empty-state">
+      <h3>Товаров пока нет</h3>
+      <p>Добавьте первый товар в каталог</p>
+      {{#if (eq user.role "ADMIN")}}
+      <a href="/products/add" class="btn">Добавить товар</a>
+      {{/if}}
+    </div>
+    {{/if}}
+  </div>
+</section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+  const es = new EventSource('/products/events');
+  const wrapper = document.querySelector('.page-section .wrapper');
+
+  function ensureGrid() {
+    let grid = document.getElementById('products-grid');
+    if (grid) {
+      return grid;
+    }
+
+    const emptyState = document.getElementById('products-empty-state');
+    if (emptyState) {
+      emptyState.remove();
+    }
+
+    grid = document.createElement('div');
+    grid.className = 'products-grid';
+    grid.id = 'products-grid';
+    wrapper.appendChild(grid);
+    return grid;
+  }
+
+  function renderProductCard(product) {
+    return `
+      <div class="product-card" data-product-id="${product.id}">
+        <div class="product-card-body">
+          <span class="product-category">${product.categoryName}</span>
+          <h3><a href="/products/${product.id}">${product.name}</a></h3>
+          <p class="product-card-desc">${product.description || ''}</p>
+          <div class="product-card-footer">
+            <span class="product-price">${product.price} ₽</span>
+            <span class="product-stock">В наличии: ${product.stock} шт.</span>
+          </div>
+          {{#if (eq user.role "ADMIN")}}
+          <div class="review-actions" style="margin-top: 15px;">
+            <a href="/products/${product.id}/edit" class="btn-edit">Редактировать</a>
+            <form action="/products/${product.id}/delete" method="POST" style="display:inline">
+              <button type="submit" class="btn-delete">Удалить</button>
+            </form>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderEmptyState() {
+    if (document.getElementById('products-empty-state')) {
+      return;
+    }
+
+    const emptyState = document.createElement('div');
+    emptyState.className = 'empty-state';
+    emptyState.id = 'products-empty-state';
+    emptyState.innerHTML = `
+      <h3>Товаров пока нет</h3>
+      <p>Добавьте первый товар в каталог</p>
+      {{#if (eq user.role "ADMIN")}}
+      <a href="/products/add" class="btn">Добавить товар</a>
+      {{/if}}
+    `;
+    wrapper.appendChild(emptyState);
+  }
+
+  es.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+    toastr.info('Товар "' + data.product.name + '" был ' + data.action);
+
+    if (data.action === 'удалён') {
+      const card = document.querySelector('[data-product-id="' + data.product.id + '"]');
+      if (!card) {
+        return;
+      }
+
+      const grid = document.getElementById('products-grid');
+      card.remove();
+
+      if (grid && !grid.children.length) {
+        grid.remove();
+        renderEmptyState();
+      }
+    }
+
+    if (data.action === 'создан') {
+      const grid = ensureGrid();
+      const existingCard = document.querySelector('[data-product-id="' + data.product.id + '"]');
+      if (existingCard) {
+        existingCard.outerHTML = renderProductCard(data.product);
+        return;
+      }
+
+      grid.insertAdjacentHTML('afterbegin', renderProductCard(data.product));
+    }
+
+    if (data.action === 'обновлён') {
+      const existingCard = document.querySelector('[data-product-id="' + data.product.id + '"]');
+      if (!existingCard) {
+        const grid = ensureGrid();
+        grid.insertAdjacentHTML('afterbegin', renderProductCard(data.product));
+        return;
+      }
+
+      existingCard.outerHTML = renderProductCard(data.product);
+    }
+  };
+</script>

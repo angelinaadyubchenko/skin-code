@@ -1,0 +1,97 @@
+<section class="form-page">
+  <div class="wrapper">
+    {{#if order}}
+    <a href="/orders" class="form-back">← Назад к заказам</a>
+    <div class="styled-form" style="margin-bottom: 24px;">
+      <h2>Новые отзывы</h2>
+      <p style="color: var(--text-mid); margin-bottom: 0;">
+        Заказ #{{order.id}} для {{order.user.name}}. Один пользователь может оставить несколько отзывов: по одному для каждого товара.
+      </p>
+    </div>
+
+    {{#each order.items}}
+    <div class="styled-form" style="margin-bottom: 24px;">
+      <h3 style="margin-bottom: 8px;">{{this.product.name}}</h3>
+      <p style="color: var(--text-mid); margin-bottom: 20px;">
+        Количество: {{this.quantity}} шт. • Цена: {{this.price}} ₽
+      </p>
+
+      <form action="/reviews" method="POST">
+        <input type="hidden" name="userId" value="{{../user.id}}">
+        <input type="hidden" name="orderId" value="{{../order.id}}">
+        <input type="hidden" name="productId" value="{{this.product.id}}">
+
+        <div class="form-group">
+          <label>Пользователь</label>
+          <input type="text" value="{{../user.name}} ({{../user.email}})" disabled>
+        </div>
+
+        <div class="form-group">
+          <label>Оценка</label>
+          <select name="rating" required>
+            <option value="" disabled selected>Оценка</option>
+            <option value="5">★★★★★ Отлично</option>
+            <option value="4">★★★★☆ Хорошо</option>
+            <option value="3">★★★☆☆ Нормально</option>
+            <option value="2">★★☆☆☆ Плохо</option>
+            <option value="1">★☆☆☆☆ Ужасно</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Комментарий</label>
+          <textarea name="comment" placeholder="Расскажите о вашем опыте использования..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button type="submit" class="btn">Отправить отзыв</button>
+          <a href="/orders" class="btn btn-secondary">Назад</a>
+        </div>
+      </form>
+    </div>
+    {{/each}}
+    {{else}}
+    <a href="/reviews" class="form-back">← Назад к отзывам</a>
+    <div class="styled-form">
+      <h2>Новый отзыв</h2>
+      <form action="/reviews" method="POST">
+        <input type="hidden" name="userId" value="{{user.id}}">
+
+        <div class="form-group">
+          <label>Пользователь</label>
+          <input type="text" value="{{user.name}} ({{user.email}})" disabled>
+        </div>
+
+        <div class="form-group">
+          <label>Товар</label>
+          <select name="productId" required>
+            <option value="" disabled selected>Выберите товар</option>
+            {{#each products}}
+            <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Оценка</label>
+          <select name="rating" required>
+            <option value="" disabled selected>Оценка</option>
+            <option value="5">★★★★★ Отлично</option>
+            <option value="4">★★★★☆ Хорошо</option>
+            <option value="3">★★★☆☆ Нормально</option>
+            <option value="2">★★☆☆☆ Плохо</option>
+            <option value="1">★☆☆☆☆ Ужасно</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Комментарий</label>
+          <textarea name="comment" placeholder="Расскажите о вашем опыте использования..."></textarea>
+        </div>
+
+        <button type="submit" class="btn">Отправить отзыв</button>
+      </form>
+    </div>
+    {{/if}}
+  </div>
+</section>
